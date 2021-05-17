@@ -32,7 +32,7 @@
 							<img id="id_avatar_img" class="avatar-img"
 								src="{% static 'profile_page/images/default_avatar.jpg' %}">
 							{% endif %}
-							<div class="op-btns w-100 d-flex mb-3 py-2 bg-light border"
+							<div class="op-btns w-100 d-flex mb-3 py-2 bg-white border"
 								style="justify-content: space-between;">
 								{% if page.user == profile.user %}
 								<button class="mx-2 d-block btn button-green">Settings</button>
@@ -302,10 +302,10 @@
 
 
 
-			<div class="post-aside">
+			<div class="post-aside px-2">
 				<div class="post-aside-wrapper">
 
-					<div class="user-friends bg-white py-2 mb-4">
+					<div class="user-friends divs bg-white py-2 mb-4">
 						<span class="d-block h5 my-2 mb-4 px-3">User friends</span>
 
 						<div class="px-3 d-block text-center">
@@ -329,7 +329,7 @@
 					</div>
 
 
-					<div class="simi-names bg-white py-2 mb-4">
+					<div class="simi-names divs bg-white py-2 mb-4">
 						<span class="d-block h5 my-2 mb-4 px-3">Others with a similar name</span>
 
 						{% for i in simi_users %}

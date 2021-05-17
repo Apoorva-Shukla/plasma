@@ -15,10 +15,6 @@
 	/* border-radius: 0 0 16px 16px; */
 }
 
-.op-btns {
-	background-color: #f2f3f5;
-}
-
 .avatar-img {
 	width: 160px;
 	height: 160px;
@@ -196,6 +192,10 @@
 /* post aside */
 .post-aside {
 	width: 380px;
+}
+
+.post-aside .divs {
+	border-radius: 8px;
 }
 
 .post-aside img {
