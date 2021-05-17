@@ -20,7 +20,7 @@ function loadMorePosts() {
             const moreBool = $.parseJSON(data.more_bool);
             $('#more-post-container').remove();
             $('.posts-loader-container').remove();
-            let wholeHtml = ``;
+            let wholeHtml;
             if (moreBool) {
                 const posts = $.parseJSON(data.posts);
                 const liked_or_not = data.liked_or_not;
@@ -35,7 +35,7 @@ function loadMorePosts() {
 
                 for (let i = 0; i < posts.length; i++) {
                     _caption = JSON.stringify(posts[i].fields.caption).replace('"', '').replace('"', '').toString();
-                    _caption = replaceAll(_caption, String.raw`\n`, '<br>');
+                    _caption = replaceAll(_caption, String.raw`\n`, '<br>').split('<br>');
 
                     if (!share_with[i]) {
                         share_with_html = `<i class="fas fa-globe-asia mx-2 d-block my-auto" title="Shared with: Public"></i>`;
@@ -59,7 +59,7 @@ function loadMorePosts() {
                             </div>`;
                     }
 
-                    wholeHtml += `
+                    wholeHtml = `
                     <div class="e-post mb-4">
 						<div class="about-post px-2 py-3 d-flex">
 							<div class="d-flex">
@@ -75,7 +75,7 @@ function loadMorePosts() {
 							<button class="fas fa-ellipsis-h" data-bs-toggle="modal" data-bs-target="#post-option-modal"></button>
 						</div>
 						<div id="${posts[i].pk}-show-more-btn" class="e-post-caption px-2 py-1">
-							<span class="d-block">${_caption}</span>
+							<span class="d-block caption-text">${_caption}</span>
 							<script>
 								if ($('${posts[i].pk}-show-more-btn').find('span').height() > 43) {
 									$('${posts[i].pk}-show-more-btn').find('span').addClass('caption-height');
@@ -113,14 +113,24 @@ function loadMorePosts() {
                                 </div>
                             </div>
 					</div>`;
-                }
 
-                $('#id_posts').append(wholeHtml);
-                pagePosts.append(laterHtml);
+                    $('#id_posts').append(wholeHtml);
+
+                    $(`${posts[i].pk}-show-more-btn`).find('span.caption-text').html('');
+                    for (const x in _caption) {
+                        if (x > 0) {
+                            document.getElementById(`${posts[i].pk}-show-more-btn`).children[0].innerText += _caption[x];
+                        } else {
+                            $(`#${posts[i].pk}-show-more-btn`).find('span.caption-text').text(_caption[x]);
+                        }
+                        $(`#${posts[i].pk}-show-more-btn`).find('span.caption-text').append('<br>');
+                    }
+                }
+                $('.e-comments').hide();
+                $('#id_posts').append(laterHtml);
                 $("#load-more-posts-btn").on('click', $('#load-more-posts-btn'), (e) => {
                     loadMorePosts();
                 });
-                $('.e-comments').hide();
             } else {
                 pagePosts.append('<p class="text-center">Looks like you\'ve digested all Posts!</p>');
             }
@@ -204,7 +214,7 @@ if (form != null) {
             success: function (data) {
                 const _data = $.parseJSON(data['lp'])[0];
                 let _caption = JSON.stringify(_data.fields.caption).replace('"', '').replace('"', '').toString();
-                _caption = replaceAll(_caption, String.raw`\n`, '<br>');
+                _caption = replaceAll(_caption, String.raw`\n`, '<br>').split('<br>');
                 let content;
 
                 let share_with_html = `<i class="fas fa-users mx-2 d-block my-auto" title="Shared with: Few People"></i>`;
@@ -232,16 +242,8 @@ if (form != null) {
                             </div>
                             <button class="fas fa-ellipsis-h" data-bs-toggle="modal" data-bs-target="#post-option-modal"></button>
                         </div>
-                        <div id="${_data.fields.pk}-show-more-btn" class="e-post-caption px-2 py-1">
-							<span class="d-block">${_caption}</span>
-							<script>
-								if ($('${_data.fields.pk}-show-more-btn').find('span').height() > 43) {
-									$('${_data.fields.pk}-show-more-btn').find('span').addClass('caption-height');
-									$('${_data.fields.pk}-show-more-btn').find('span').addClass('overflow-hidden');
-
-									$('${_data.fields.pk}-show-more-btn').parent().append('<button name="show-more" class="underline-hover text-blue show-more-caption-btn fw-bold">Show more</button>');
-								}
-							</script>
+                        <div id="${_data.pk}-show-more-btn" class="e-post-caption px-2 py-1">
+							<span class="d-block caption-text">${_caption}</span>
 						</div>
                         <div class="e-post-content w-100 text-center border mt-2">
                             ${content}
@@ -274,6 +276,16 @@ if (form != null) {
                 </div>`;
 
                 $('#id_posts').prepend(mh);
+
+                $(`${_data.fields.pk}-show-more-btn`).find('span.caption-text').html('');
+                for (const x in _caption) {
+                    if (x > 0) {
+                        document.getElementById(`${_data.pk}-show-more-btn`).children[0].innerText += _caption[x];
+                    } else {
+                        $(`#${_data.pk}-show-more-btn`).find('span.caption-text').text(_caption[x]);
+                    }
+                    $(`#${_data.pk}-show-more-btn`).find('span.caption-text').append('<br>');
+                }
 
                 $('.sendBtn').html(`Share`);
                 $('#filePreviewBox').html('');
