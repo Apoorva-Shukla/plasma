@@ -1,0 +1,392 @@
+{% load static %}
+<link href="{% static 'profile_page/css/cropper.min.css' %}" rel="stylesheet">
+<script defer src="{% static 'profile_page/js/cropper.min.js' %}"></script>
+
+<script defer src="{% static 'profile_page/js/profile_content.js' %}"></script>
+<script defer src="{% static 'profile_page/js/banner_profile.js' %}"></script>
+<link rel="stylesheet" href="{% static 'profile_page/css/profile_content.css' %}">
+
+
+<div class="main-content" id="id_main_content">
+	<input type="hidden" id="username" value="{{page.user.username}}">
+	<input type="hidden" id="username_pk" value="{{page.user.pk}}">
+	<input type="hidden" id="auth_username" value="{{profile.user.username}}">
+	<input type="hidden" id="auth_username_pk" value="{{profile.pk}}">
+
+	<div class="profile-container">
+		<div class="header-wrapper w-100">
+			<div class="header w-100">
+				<div class="banner-container">
+					{% if page.banner != '' %}
+					<img id="id_banner_img" class="banner-img" src="/media/{{page.banner}}" alt=" ">
+					{% else %}
+					<div class="banner-area-fake bg-dark" id="id_banner_img" style="width: 100%;height: 45vh;position: relative;top: 0;left: 0;"></div>
+					{% endif %}
+				</div>
+				<div class="avatar-wrapper">
+					<div class="avatar-container-wrapper text-center">
+						<div class="avatar-container text-center">
+							{% if page.avatar != '' %}
+							<img id="id_avatar_img" class="avatar-img" src="/media/{{page.avatar}}">
+							{% else %}
+							<img id="id_avatar_img" class="avatar-img"
+								src="{% static 'profile_page/images/default_avatar.jpg' %}">
+							{% endif %}
+							<div class="op-btns w-100 d-flex mb-3 py-2 bg-light border"
+								style="justify-content: space-between;">
+								{% if page.user == profile.user %}
+								<button class="mx-2 d-block btn button-green">Settings</button>
+								<div class="d-flex">
+									<label for="id_edit_banner" class="mx-2 d-block btn button-blue">Edit Cover photo</label>
+									<input type="file" id="id_edit_banner" accept="image/*" class="d-none">
+
+									<label for="id_avatar" class="mx-2 d-block btn button-blue">Edit Profile photo</label>
+									<input type="file" id="id_avatar" accept="image/*" class="d-none">
+								</div>
+								{% else %}
+								<button class="mx-2 d-block btn button-green">Send Message</button>
+								<div class="d-flex">
+									{% if authenticated %}
+
+									<div class="friend-request-container">
+										{% if friends == '1s' %}
+										<button name="unfriend"
+											class="mx-2 d-block btn button-blue add-friend-btn">Unfriend</button>
+										{% elif friends == '0r' %}
+										<button name="cancel-request"
+											class="mx-2 d-block btn button-blue add-friend-btn">Cancel
+											request</button>
+										{% elif friends == '0s' %}
+										<div class="btn-group" role="group">
+											<span style="font-size: large;" class="fw-bold my-auto mx-2">Friend
+												Request</span>
+											<button name="accept-friend"
+												class="add-friend-btn fas fa-check my-auto d-block text-light btn button-blue"><span
+													style="font-family: 'Roboto';"> Accept</span></button>
+											<button name="reject-friend"
+												class="add-friend-btn fas fa-times my-auto d-block text-light btn button-green"><span
+													style="font-family: 'Roboto';"> Reject</span></button>
+										</div>
+										{% else %}
+										<button name="add-friend"
+											class="mx-2 d-block btn button-blue add-friend-btn">Add
+											Friend</button>
+										{% endif %}
+
+									</div>
+									{% else %}
+									<!-- fake add friend btn -->
+									<button class="mx-2 d-block btn button-blue add-friend-btn-fake">Add Friend</button>
+									{% endif %}
+								</div>
+								{% endif %}
+							</div>
+							<div class="px-5">
+								<h2 class="fw-bold">{{page.user.first_name}} {{page.user.last_name}}</h2>
+								<h4 class="text-secondary">@{{page.user.username}}</h4>
+								{% if page.bio != '' %}
+								<span class="user-bio d-block text-secondary">{{page.bio}}</span>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+
+					<div class="update-img-container d-none my-3 bg-light py-3 border">
+						<div class="update-img-fluid">
+							<div class="px-3">
+								<div>
+									<img id="drag-image" style="width:100%;width: auto;height:auto;max-height: 80vh;" src="" alt=" ">
+								</div>
+							</div>
+							<p class="text-center mt-3"><button id="crop-submit" class="btn button-blue">Submit</button></p>
+						</div>
+					</div>
+<!-- 
+					<div class="story-container mt-3 px-4 d-flex">
+
+						<div class="story-fluid d-flex">
+							<div class="e-story mx-3">
+								<img src="https://images.unsplash.com/photo-1536148935331-408321065b18?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80" alt=" ">
+							</div>
+							<div class="e-story mx-3">
+								<img src="https://images.unsplash.com/photo-1536148935331-408321065b18?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80" alt=" ">
+							</div>
+							<div class="e-story mx-3">
+								<img src="https://images.unsplash.com/photo-1536148935331-408321065b18?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80" alt=" ">
+							</div>
+						</div>
+						<div class="story-more my-auto">
+							<button class="fas fa-plus"></button>
+						</div>
+
+					</div> -->
+
+				</div>
+			</div>
+		</div>
+
+		<div class="mb-5"></div>
+
+		{% if page.user == profile.user %}
+		{% if page.user == profile.user %}
+		<div class="px-4 container" style="position: relative;top: -160px; margin-bottom: -160px;">
+		{% else %}
+		<div class="px-4 container">
+		{% endif %}
+			<div class="add-post mb-5">
+				<div id="filePreviewBox"></div>
+				<div class="d-flex">
+					{% if profile.avatar != '' %}
+					<label for="id_caption"><img class="small-avatar d-block mx-3"
+							src="/media/{{profile.avatar}}"></label>
+					{% else %}
+					<label for="id_caption"><img class="small-avatar d-block mx-3"
+							src="{% static 'profile_page/images/default_avatar.jpg' %}"></label>
+					{% endif %}
+					<div class="w-100 my-auto">
+						<form id="upload-post-form" action="/{{profile.user.username}}/" method="POST"
+							enctype="multipart/form-data">
+							{{form.caption}}
+							<script>
+								document.getElementById('id_caption').placeholder = "What's in your mind {{profile.user.first_name}}";
+							</script>
+							<hr>
+							<div class="d-flex" style="justify-content: space-between;">
+								<div class="d-flex">
+									<label for="id_image" class="text-danger mx-3 fas fa-image"
+										style="cursor: poiner;margin-left: 0!important;"> <span
+											style="font-family: 'Roboto';">Photo</span></label>
+									{{form.image}}
+									<label for="id_video" class="text-secondary mx-3 fas fa-image"
+										style="cursor: poiner;margin-left: 0!important;"> <span
+											style="font-family: 'Roboto';">Video</span></label>
+									{{form.video}}
+									<label class="text-primary mx-3 fas fa-tag"> <span
+											style="font-family: 'Roboto';">Tag</span></label>
+								</div>
+								<div class="d-flex">
+									<div class="d-flex mx-3">
+										<label class="text-dark my-auto mx-2" for="id_share_with">Share with</label>
+										{{form.share_with}}
+									</div>
+									<button type="submit" class="sendBtn btn button-green mx-2">Share</button>
+								</div>
+							</div>
+						</form>
+						<span class="text-center">
+							You can create a circle <a href="/create/circle/">here</a>.
+							If you do not select any option, the post becomes Public.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+
+		{% if page.user == profile.user %}
+		<div class="post-container d-flex container mb-5">
+		{% else %}
+		<div class="post-container container d-flex mb-5" style="position: relative;top: -160px; margin-bottom: -160px;">
+		{% endif %}
+			<div class="page-posts px-3" style="flex: 1;">
+				<div id="id_posts">
+					{% if posts %}
+					{% for i in posts %}
+					<div class="e-post mb-4">
+						<div class="about-post px-2 py-3 d-flex">
+							<div class="d-flex">
+								{% if page.avatar != '' %}
+								<img class="my-auto d-block" src="/media/{{page.avatar}}" alt=" ">
+								{% else %}
+								<img class="my-auto d-block"
+									src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">
+								{% endif %}
+								<div class="mx-2 my-auto">
+									<span class="d-block">{{page.user.username}}</span>
+									<small class="d-block my-auto d-flex">
+										{{i.0.date_added}}
+										{% if i.0.share_with == null %}
+										<i class="fas fa-globe-asia mx-2 d-block my-auto"
+											title="Shared with: Public"></i>
+										{% else %}
+										<i class="fas fa-users mx-2 d-block my-auto"
+											title="Shared with: Few People"></i>
+										{% endif %}
+									</small>
+								</div>
+							</div>
+							<button class="fas fa-ellipsis-h" data-bs-toggle="modal"
+								data-bs-target="#post-option-modal"></button>
+						</div>
+						<div id="{{i.0.pk}}-show-more-btn" class="e-post-caption px-2 py-1">
+							<span class="d-block caption-text">{{i.0.caption|linebreaksbr}}</span>
+							<script>
+								if ($('#{{i.0.pk}}-show-more-btn').find('span').height() > 43) {
+									$('#{{i.0.pk}}-show-more-btn').find('span').addClass('caption-height');
+									$('#{{i.0.pk}}-show-more-btn').find('span').addClass('overflow-hidden');
+
+									$('#{{i.0.pk}}-show-more-btn').parent().append(`<button name="show-more" class="underline-hover text-blue show-more-caption-btn fw-bold">Show more</button>`);
+								}
+							</script>
+						</div>
+						<div class="e-post-content w-100 text-center border mt-2">
+							{% if i.0.image != '' %}
+							<img style="width: auto;height: auto;max-height: 80vh;max-width: 100%;"
+								src="/media/{{i.0.image}}" alt=" ">
+							{% else %}
+							<video style="width: auto;height: auto;max-height: 80vh;max-width: 100%;"
+								src="/media/{{i.0.video}}" controls></video>
+							{% endif %}
+						</div>
+						<div class="e-post-options-wrapper">
+							<div class="e-post-options d-flex py-2" id="post-op-{{i.0.pk}}">
+								<div class="e-post-options-btn my-auto">
+									<div class="like-btn-container d-inline-block">
+										{% if not i.1 %}
+
+										{% if authenticated %}
+										<button name="like" class="far fa-thumbs-up like-button like-btn"></button>
+										{% else %}
+										<button class="far fa-thumbs-up like-btn-fake"></button>
+										{% endif %}
+
+										{% else %}
+										<button name="unlike"
+											class="fas fa-thumbs-up like-button unlike-btn"></button>
+										{% endif %}
+									</div>
+									<div class="comment-btn-container d-inline-block">
+										<button class="fas fa-comment comment-btn"></button>
+									</div>
+								</div>
+								<div class="e-post-options-stats my-auto">
+									<span class="mx-2">{{i.2}} likes</span>
+									<a class="comment-btn underline-hover" style="background-color: transparent;font-size: initial;font-weight: initial;color: #000;width: initial;">4 comments</a>
+								</div>
+							</div>
+						</div>
+						<div class="e-comments border-top">
+							<div class="add-comment-container py-3">
+								<input type="text" class="form-control w-100 transparent-inp" placeholder="Say something..." style="border-bottom: 1px solid rgba(128, 128, 128, 0.2)!important;">
+							</div>
+							<div class="e-comments-fluid py-3">
+								<div class="e-comments-items"></div>
+								<p class="text-center"><button class="btn button-green comment-load-btn">Load comments</button></p>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+					{% endif %}
+				</div>
+				{% if posts %}
+				<p class="text-center" id="more-post-container">
+					<button class="btn button-blue" id="load-more-posts-btn">Load more</button>
+				</p>
+				<div class="posts-loader-container text-center w-100 d-block py-2 d-none">
+					<span class="spinner-border text-secondary" role="status" aria-hidden="true"></span>
+				</div>
+				{% endif %}
+
+				{% if not posts %}
+				{% if page.user != profile.user %}
+				<h1 class="no-post-h1 text-secondary"><i class="fas fa-folder-open"></i> {{page.user.username}}
+					has no
+					posts yet!</h1>
+				{% else %}
+				<h1 class="no-post-h1 text-secondary"><i class="fas fa-folder-open"></i> You have no posts yet!
+				</h1>
+				{% endif %}
+				{% endif %}
+			</div>
+
+
+
+			<div class="post-aside">
+				<div class="post-aside-wrapper">
+
+					<div class="user-friends bg-white py-2 mb-4">
+						<span class="d-block h5 my-2 mb-4 px-3">User friends</span>
+
+						<div class="px-3 d-block text-center">
+							{% for i in user_friends %}
+							<a class="mb-2 hover-grey px-2 py-2 mx-2 d-inline-block" href="/{{i.user.username}}/">
+								<div class="user-friends-avatar text-center">
+									{% if i.avatar != '' %}
+									<img class="rounded-circle" src="/media/{{i.avatar}}" alt="">
+									{% else %}
+									<img class="rounded-circle" src="{% static 'profile_page/images/default_avatar.jpg' %}" alt="">
+									{% endif %}
+								</div>
+								<span class="d-block fw-bold">{{i.user.first_name}} {{i.user.last_name}}</span>
+							</a>
+							{% endfor %}
+						</div>
+
+						<div class="text-center px-3 mt-2">
+							<button class="button-grey py-2 w-100 fw-bold bounce-btn" style="border-radius: 6px!important;">Show all</button>
+						</div>
+					</div>
+
+
+					<div class="simi-names bg-white py-2 mb-4">
+						<span class="d-block h5 my-2 mb-4 px-3">Others with a similar name</span>
+
+						{% for i in simi_users %}
+						<a class="e-simi-names d-block mb-2" href="/{{i.user.username}}/">
+
+							<div class="simi-banner">
+								{% if i.banner != '' %}
+								<img class="w-100" src="/media/{{i.banner}}" alt="">
+								{% else %}
+								<div class="bg-dark" id="id_banner_img" style="width: 100%;height: 100px;"></div>
+								{% endif %}
+								<div class="simi-avatar text-center">
+									{% if i.avatar != '' %}
+									<img class="rounded-circle" src="/media/{{i.avatar}}" alt="">
+									{% else %}
+									<img class="rounded-circle" src="{% static 'profile_page/images/default_avatar.jpg' %}" alt="">
+									{% endif %}
+									<span class="d-block fw-bold">{{i.user.first_name}} {{i.user.last_name}}</span>
+								</div>
+							</div>
+
+						</a>
+						{% endfor %}
+
+						<div class="text-center px-3 mt-2">
+							<button class="button-grey py-2 w-100 fw-bold bounce-btn" style="border-radius: 6px!important;">Show all</button>
+						</div>
+
+					</div>
+
+
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+<script defer>
+	$(document).ready(function () {
+		$(document).on('click', '.add-friend-btn', e => {
+			let name = e.target.name;
+			if (name == undefined) {
+				name = e.target.parentElement.name;
+			}
+			friendRequest($('#username_pk').val(), name, () => {
+				$('.friend-request-container').load(location.href + ' .add-friend-btn');
+				$('.friend-list').load(location.href + ' .friend-list-wrapper')
+			});
+		});
+	});
+</script>

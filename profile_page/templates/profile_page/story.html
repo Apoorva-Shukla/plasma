@@ -1,0 +1,17 @@
+{% extends 'profile_page/base.html' %}
+
+{% block title %}
+Plasma • {{page.user.username}}
+{% endblock %}
+
+{% block body %}
+{% include 'profile_page/story_content.html' %}
+{% endblock %}
+
+{% block unauth_body %}
+<script>
+    location.href = '/s/';
+</script>
+{% endblock %}
+
+{% block script %}{% endblock %}

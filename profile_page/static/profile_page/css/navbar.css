@@ -1,0 +1,91 @@
+.nbar {
+    background: #fff;
+    width: 100%;
+    z-index: 2000;
+    box-shadow: 0 0 6px #555;
+}
+
+.nbar h1 a {
+    color: var(--theme2)!important;
+}
+
+.nbar .container {
+    justify-content: space-between;
+}
+
+.header-container {
+    flex: 1;
+}
+
+.nav-options-container a, .nav-options-container a:hover {
+    color: #272d39;
+    font-size: x-large;
+    text-decoration: none;
+}
+
+.nav-options-container a img {
+    width: 50px;
+    height: 50px;
+    padding: 6px;
+    border-radius: 100%;
+}
+
+.nav-options-container .alternates, .nav-options-container .alternates:hover {
+    color: #272d39;
+}
+
+@media screen and (max-width: 510px) {
+    .search-container {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 280px) {
+    .nav-options-container {
+        display: none!important;
+    }
+    .header-container .header {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* elements------------ */
+
+input {
+    background-color: #fafafa!important;
+    border-radius: 3px!important;
+    border: 1px solid grey;
+    font-size: small!important;
+}
+
+label {
+    font-size: medium!important;
+}
+
+input:focus {
+    box-shadow: none!important;
+    border: 1px solid rgba(0, 0, 0, 0.5)!important;
+}
+
+a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #212529;
+}
+
+a:hover {
+    color: #212529;
+}
+
+button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* elements------------ */

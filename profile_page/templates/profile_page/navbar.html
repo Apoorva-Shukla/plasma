@@ -1,0 +1,35 @@
+{% load static %}
+<script defer src="{% static 'profile_page/js/navbar.js' %}"></script>
+<link rel="stylesheet" href="{% static 'profile_page/css/navbar.css' %}">
+
+<!-- Navbar starts from here -->
+<nav class="nbar">
+    <div class="container d-flex">
+        <div class="header-container d-flex">
+            <div class="nav-header my-auto">
+                <h1><a href="/">Plasma</a></h1>
+            </div>
+            <div class="my-auto mx-2">
+                <button id="toggle-sidebar" class="fas fa-bars my-auto" style="color: var(--theme2);font-size: x-large;"></button>
+            </div>
+            <div class="search-container my-auto mx-4 w-50">
+                <input type="search" class="form-control" placeholder="Search" style="border-radius: 17px!important;background-color: #f2f3f5!important;">
+            </div>
+        </div>
+        <div class="d-flex nav-options-container">
+            <div class="my-auto mx-2">
+                <a href="/friends/" class="fas fa-user-friends alternates" name="Your friends"></a>
+            </div>
+            <div class="my-auto mx-2">
+                <a href="/notifications/" class="fas fa-bell" name="Notifications"></a>
+            </div>
+            <div class="my-auto mx-2">
+                {% if profile.avatar != '' %}
+                <a style="font-weight: 600;font-size: initial;" href="/{{profile.user.username}}/" class="profile-page-link my-auto" title="Your profile"><img src="/media/{{profile.avatar}}" alt=" ">{{profile.user.first_name}}</a>
+                {% else %}
+                <a style="font-weight: initial;font-size: initial;" href="/{{profile.user.username}}/" class="profile-page-link my-auto" title="Your profile"><img src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">{{profile.user.first_name}}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

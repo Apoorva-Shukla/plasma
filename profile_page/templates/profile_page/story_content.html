@@ -1,0 +1,41 @@
+{% load static %}
+
+<script src="{% static 'profile_page/js/story.js' %}"></script>
+<link rel="stylesheet" href="{% static 'profile_page/css/story.css' %}">
+
+<div class="story-container">
+    <div class="story-fluid">
+        <div class="py-5">
+            <div class="py-3"></div>
+        </div>
+
+        <div class="friends-stories">
+            <div class="py-1 px-3 border-bottom border-top" style="background-color: #ddd;">
+                <h6 class="w-100 d-block my-auto">See what your friends have shared</h6>
+            </div>
+            <div class="friends-stories-fluid">
+
+                {% for i in friends_story_list %}
+                {% if i != None %}
+                <div class="e-friend-story border-bottom w-100">
+                    <div class="d-flex py-2 px-3">
+                        {% if i.profile.avatar != '' %}
+                        <img class="rounded-circle story-friend-image" src="/media/{{i.profile.avatar}}" alt=" ">
+                        {% else %}
+                        <img class="rounded-circle story-friend-image" src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">
+                        {% endif %}
+
+                        <div class="px-3 my-auto">
+                            <span style="font-weight: 600;">{{i.profile.user.first_name}}</span>
+                            <span class="d-block">{{i.date}} {{i.time}}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+</div>

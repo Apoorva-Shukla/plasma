@@ -1,0 +1,62 @@
+:root {
+    --theme1: #42b72a;
+    --theme2: #0f82eb;
+    --hovercolor: #ddd;
+}
+
+aside {
+    width: 280px;
+    height: 100%;
+    position: sticky;
+    left: 0;
+    overflow-y: auto;
+    background-color: #f2f3f5;
+}
+
+.side-user-options {
+    margin-top: 10px;
+}
+
+.e-options {
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.e-options:hover {
+    background-color: var(--hovercolor);
+}
+
+.e-options span {
+    font-size: larger;
+    font-weight: 600;
+}
+
+.e-options i {
+    font-size: larger;
+    font-weight: 600;
+}
+
+.e-friends span {
+    font-size: larger;
+    font-weight: 600;
+}
+
+.e-friends {
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.e-friends:hover {
+    background-color: var(--hovercolor);
+}
+
+.e-birthdays img {
+    width: 45px;
+    height: 45px;
+    border: 3px solid #fff;
+}
+
+.birthday-list-wrapper a:not(:first-child) {
+    position: relative;
+    right: 15px;
+}

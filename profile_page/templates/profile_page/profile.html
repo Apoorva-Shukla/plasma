@@ -1,0 +1,15 @@
+{% extends 'profile_page/base.html' %}
+
+{% block title %}
+Plasma • {{page.user.username}}
+{% endblock %}
+
+{% block body %}
+{% include 'profile_page/profile_content.html' %}
+{% endblock %}
+
+{% block unauth_body %}
+{% include 'profile_page/profile_content.html' %}
+{% endblock %}
+
+{% block script %}{% endblock %}

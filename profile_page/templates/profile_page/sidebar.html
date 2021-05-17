@@ -1,0 +1,89 @@
+{% load static %}
+<script defer src="{% static 'profile_page/js/sidebar.js' %}"></script>
+<link rel="stylesheet" href="{% static 'profile_page/css/sidebar.css' %}">
+
+<!-- Sidebar starts from here -->
+<aside id="sidebar">
+    <div class="side-user-options px-2">
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-home my-auto px-3"></i>
+            <span>Home</span>
+        </div>
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-fighter-jet my-auto px-3"></i>
+            <span>Trending</span>
+        </div>
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-comment-alt my-auto px-3"></i>
+            <span>Chats</span>
+        </div>
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-image my-auto px-3"></i>
+            <span>Photos</span>
+        </div>
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-video my-auto px-3"></i>
+            <span>Videos</span>
+        </div>
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-bookmark my-auto px-3"></i>
+            <span>Bookmarks</span>
+        </div>
+    </div>
+
+    <hr>
+
+    {% if birthday_list %}
+    <div class="birthday-list px-2">
+        <span class="fw-bold d-block mb-3 px-2" style="color: var(--theme2);font-size: larger;">Birthdays</span>
+        <div class="birthday-list-wrapper px-3 d-inline-block">
+            {% for i in birthday_list %}
+            <a class="e-birthdays py-1" href="/{{i.user.username}}/" title="{{i.user.first_name}}">
+                {% if i.avatar != '' %}
+                <img class="my-auto rounded-circle" style="height: auto;" src="/media/{{i.avatar}}" alt=" ">
+                {% else %}
+                <img class="my-auto rounded-circle" style="height: auto;" src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+        {% if more_birthdays != 0 %}
+        <span class="fw-bold" style="margin-left: -25px;">and {{more_birthdays}} more...</span>
+        {% endif %}
+    </div>
+    <hr>
+    {% endif %}
+
+    {% if friends_list %}
+    <div class="friend-list px-2">
+        <div class="friend-list-wrapper">
+            <span class="fw-bold d-block mb-3 px-2" style="color: var(--theme2);font-size: larger;">Friends</span>
+            {% for i in friends_list %}
+            <a class="e-friends d-flex py-1" href="/{{i.user.username}}/">
+
+                {% if i.avatar != '' %}
+                <img class="my-auto px-3 rounded-circle" style="height: auto;" width="80" height="80" src="/media/{{i.avatar}}" alt=" ">
+                {% else %}
+                <img class="my-auto px-3 rounded-circle" style="height: auto;" width="80" height="80" src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">
+                {% endif %}
+
+                <span class="my-auto">{{i.user.first_name}}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <hr>
+
+    {% endif %}
+
+    <div class="legals text-center mb-3">
+        <a href="/legal/about/" class="text-secondary underline-hover mx-1">About</a>
+        <a href="/legal/copyright/" class="text-secondary underline-hover mx-1">Copyright</a>
+        <a href="/legal/contact/" class="text-secondary underline-hover mx-1">Contact us</a>
+        <a href="/legal/terms/" class="text-secondary underline-hover mx-1">Terms</a>
+        <a href="/legal/privacy/" class="text-secondary underline-hover mx-1">Privacy</a>
+        <div class="mb-1"></div>
+        <a class="text-secondary d-block">Copyright &copy; 2021</a>
+    </div>
+</aside>

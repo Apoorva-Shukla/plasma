@@ -1,0 +1,33 @@
+{% load static %}
+<script defer src="{% static 'profile_page/js/sidebar.js' %}"></script>
+<link rel="stylesheet" href="{% static 'profile_page/css/sidebar.css' %}">
+
+<!-- Sidebar starts from here -->
+<aside id="sidebar">
+    <div class="side-user-options px-2">
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-home my-auto px-3"></i>
+            <span>Home</span>
+        </div>
+        <div class="e-options d-flex py-2 px-2">
+            <i class="fas fa-fighter-jet my-auto px-3"></i>
+            <span>Trending</span>
+        </div>
+    </div>
+    <hr>
+    <div class="sign-in-prompt px-2 py-3">
+        <div class="sign-in-prompt-wrapper text-center">
+            <a href="/s/" class="px-3 py-2 border-btn-blue"><i class="fas fa-user"></i> Sign in</a>
+        </div>
+    </div>
+    <hr>
+    <div class="legals text-center mb-3">
+        <a href="/legal/about/" class="text-secondary underline-hover mx-1">About</a>
+        <a href="/legal/copyright/" class="text-secondary underline-hover mx-1">Copyright</a>
+        <a href="/legal/contact/" class="text-secondary underline-hover mx-1">Contact us</a>
+        <a href="/legal/terms/" class="text-secondary underline-hover mx-1">Terms</a>
+        <a href="/legal/privacy/" class="text-secondary underline-hover mx-1">Privacy</a>
+        <div class="mb-1"></div>
+        <a class="text-secondary d-block">Copyright &copy; 2021</a>
+    </div>
+</aside>

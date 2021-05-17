@@ -1,0 +1,25 @@
+{% load static %}
+<script defer src="{% static 'profile_page/js/navbar.js' %}"></script>
+<link rel="stylesheet" href="{% static 'profile_page/css/navbar.css' %}">
+
+<!-- Navbar starts from here -->
+<nav class="nbar">
+    <div class="container d-flex">
+        <div class="header-container d-flex">
+            <div class="nav-header my-auto">
+                <h1><a href="/">Plasma</a></h1>
+            </div>
+            <div class="my-auto mx-2">
+                <button id="toggle-sidebar" class="fas fa-bars my-auto" style="color: var(--theme2);font-size: x-large;"></button>
+            </div>
+        </div>
+        <div class="d-flex nav-options-container">
+            <div class="my-auto mx-2">
+                <a href="/s/" class="btn-sm border-btn-blue" style="font-size: medium;" name="Sign in">Sign in</a>
+            </div>
+            <div class="my-auto mx-2">
+                <a href="/r/" class="btn-sm border-btn-blue" style="font-size: medium;" name="Register">Register</a>
+            </div>
+        </div>
+    </div>
+</nav>

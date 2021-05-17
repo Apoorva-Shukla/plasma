@@ -1,0 +1,99 @@
+:root {
+    --theme1: #42b72a;
+    --theme2: #0f82eb;
+    --hovercolor: #ddd;
+}
+
+body {
+    background-color: #f2f3f5;
+}
+
+main {
+    height: 100%;
+    position: sticky;
+    left: 0;
+    overflow-y: auto;
+}
+
+.underline-hover:hover {
+    text-decoration: underline;
+}
+
+/* elements */
+.button-blue {
+    background-color: var(--theme2);
+    border: 1px solid #fff;
+    outline: none;
+    color: #fff;
+    border-radius: 0!important;
+}
+
+.button-blue:hover {
+    color: #fff;
+}
+
+.button-green {
+    background-color: var(--theme1);
+    border: 1px solid #fff;
+    outline: none;
+    color: #fff;
+    border-radius: 0!important;
+}
+
+.button-green:hover {
+    color: #fff;
+}
+
+.button-grey {
+    background-color: var(--hovercolor);
+    border: 1px solid #fff;
+    outline: none;
+    color: #000;
+    border-radius: 0!important;
+}
+
+.button-grey:hover {
+    color: #000;
+}
+
+.border-btn-blue {
+    border: 1px solid var(--theme2)!important;
+    color: var(--theme2)!important;
+}
+
+.text-blue {
+    color: var(--theme2);
+}
+
+.text-green {
+    color: var(--theme1);
+}
+
+select, select option {
+    cursor: pointer;
+    padding: 6px 10px;
+    border: 2px solid var(--theme2);
+    border-radius: 30px;
+    color: var(--theme2);
+}
+
+select:focus {
+    outline: none;
+}
+
+.hover-grey:hover {
+    background-color: var(--hovercolor);
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bounce-btn:active {
+    animation: bounce 0.4s;
+}

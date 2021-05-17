@@ -1,0 +1,51 @@
+@keyframes alertanimation {
+    0% {
+        left: 50vh;
+    }
+    10% {
+        left: 45vh;
+    }
+    20% {
+        left: 40vh;
+    }
+    30% {
+        left: 35vh;
+    }
+    40% {
+        left: 30vh;
+    }
+    50% {
+        left: 25vh;
+    }
+    60% {
+        left: 20vh;
+    }
+    70% {
+        left: 15vh;
+    }
+    80% {
+        left: 10vh;
+    }
+    90% {
+        left: 5vh;
+    }
+    100% {
+        left: 0;
+    }
+}
+
+.l-alert-c {
+    position: absolute;
+    z-index: 999;
+    left: 25px;
+    bottom: 25px;
+    /* animation: alertanimation; */
+    /* animation-duration: 0.06s; */
+}
+
+.l-alert-fluid {
+    background-color: #323232;
+    color: #fff;
+    box-shadow: 0 0 7px #333;
+    min-width: 280px;
+}
