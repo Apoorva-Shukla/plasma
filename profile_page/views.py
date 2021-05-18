@@ -9,14 +9,17 @@ import math
 from time import strftime
 
 # Utils
-def basic_vars_return(request, username):
+def basic_vars_return(request, username=None):
     '''
     username - page username
     '''
-    page = get_object_or_404(Profile, user=User.objects.filter(username=username).first())
+    if username != None:
+        page = get_object_or_404(Profile, user=User.objects.filter(username=username).first())
+    else:
+        page = None
+
     authenticated = False
     profile = None
-
 
     if request.user.is_authenticated:
         authenticated = True
