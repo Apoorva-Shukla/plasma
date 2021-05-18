@@ -76,14 +76,6 @@ function loadMorePosts() {
 						</div>
 						<div id="${posts[i].pk}-show-more-btn" class="e-post-caption px-2 py-1">
 							<span class="d-block caption-text">${_caption}</span>
-							<script>
-								if ($('${posts[i].pk}-show-more-btn').find('span').height() > 43) {
-									$('${posts[i].pk}-show-more-btn').find('span').addClass('caption-height');
-									$('${posts[i].pk}-show-more-btn').find('span').addClass('overflow-hidden');
-
-									$('${posts[i].pk}-show-more-btn').parent().append('<button name="show-more" class="underline-hover text-blue show-more-caption-btn fw-bold">Show more</button>');
-								}
-							</script>
 						</div>
 						<div class="e-post-content w-100 text-center border mt-2">
                             ${content}
@@ -115,6 +107,12 @@ function loadMorePosts() {
 					</div>`;
 
                     $('#id_posts').append(wholeHtml);
+                    if ($(`#${posts[i].pk}-show-more-btn`).find('span').height() > 43) {
+                        $(`#${posts[i].pk}-show-more-btn`).find('span').addClass('caption-height');
+                        $(`#${posts[i].pk}-show-more-btn`).find('span').addClass('overflow-hidden');
+
+                        $(`#${posts[i].pk}-show-more-btn`).append(`<button name="show-more" class="underline-hover text-blue show-more-caption-btn fw-bold px-0">Show more</button>`);
+                    }
 
                     $(`${posts[i].pk}-show-more-btn`).find('span.caption-text').html('');
                     for (const x in _caption) {
