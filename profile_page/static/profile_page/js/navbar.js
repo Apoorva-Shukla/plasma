@@ -21,3 +21,7 @@ $(document).ready(() => {
         }
     }
 });
+
+$(document).on('click', '.nav-user-photo', (e) => {
+    $('.account-info-dropdown').toggle();
+});

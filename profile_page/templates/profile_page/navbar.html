@@ -24,14 +24,38 @@
                 <div class="my-auto mx-2">
                     <a href="/notifications/" class="fas fa-bell" name="Notifications"></a>
                 </div>
-                <div class="my-auto mx-2">
+                <div class="my-auto mx-2 nav-user-photo">
                     {% if profile.avatar != '' %}
-                    <a style="font-weight: 600;font-size: initial;" href="/{{profile.user.username}}/" class="profile-page-link my-auto" title="Your profile"><img src="/media/{{profile.avatar}}" alt=" ">{{profile.user.first_name}}</a>
+                    <img src="/media/{{profile.avatar}}" alt=" " style="width: 40px;height:40px;border-radius: 100%;cursor: pointer;" class="my-auto">
                     {% else %}
-                    <a style="font-weight: initial;font-size: initial;" href="/{{profile.user.username}}/" class="profile-page-link my-auto" title="Your profile"><img src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">{{profile.user.first_name}}</a>
+                    <img src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" " style="width: 40px;height:40px;border-radius: 100%;cursor: pointer;" class="my-auto">
                     {% endif %}
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="account-info-dropdown px-3 py-3" style="display: none;">
+        <div class="account-info-fluid">
+
+            <div class="my-auto mx-2 nav-account-img px-5 py-2 text-center">
+                {% if profile.avatar != '' %}
+                <img src="/media/{{profile.avatar}}" alt=" ">
+                {% else %}
+                <img src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">
+                {% endif %}
+            </div>
+            <div class="mt-2 text-center account-info-name px-5">
+                <span class="d-block">{{profile.user.first_name}}</span>
+                <span class="d-block">{{profile.user.username}}</span>
+            </div>
+            <div class="account-info-ops px-4 py-3">
+                <a href="/{{profile.user.username}}/" class="w-100 btn button-green mb-2">Your Profile</a>
+                <a href="/settings/" class="w-100 btn mb-2 btn border-btn-blue fw-bold">Settings</a>
+                <a href="/sign-out/" class="w-100 btn button-blue">Sign Out</a>
+            </div>
+
+        </div>
+
     </div>
 </nav>

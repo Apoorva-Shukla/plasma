@@ -89,3 +89,39 @@ button:focus {
 }
 
 /* elements------------ */
+
+.account-info-dropdown {
+    position: absolute;
+    right: 0;
+}
+
+.account-info-fluid {
+    background-color: #fff;
+    box-shadow: 0 0 5px #222;
+    border-radius: 5px;
+    max-width: 400px;
+}
+
+.nav-account-img img {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+}
+
+.account-info-fluid .account-info-name :nth-child(1) {
+    font-size: large;
+    font-weight: 600;
+}
+
+.account-info-ops a {
+    border-radius: 25px!important;
+}
+
+.nav-user-photo {
+    transform: scale(0.9);
+    transition: 0.2s;
+}
+
+.nav-user-photo:hover {
+    transform: scale(1.2);
+}
