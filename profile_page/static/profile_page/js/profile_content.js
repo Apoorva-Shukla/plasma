@@ -274,6 +274,12 @@ if (form != null) {
                 </div>`;
 
                 $('#id_posts').prepend(mh);
+                if ($(`#${_data.pk}-show-more-btn`).find('span').height() > 43) {
+                    $(`#${_data.pk}-show-more-btn`).find('span').addClass('caption-height');
+                    $(`#${_data.pk}-show-more-btn`).find('span').addClass('overflow-hidden');
+
+                    $(`#${_data.pk}-show-more-btn`).append(`<button name="show-more" class="underline-hover text-blue show-more-caption-btn fw-bold px-0">Show more</button>`);
+                }
 
                 $(`${_data.fields.pk}-show-more-btn`).find('span.caption-text').html('');
                 for (const x in _caption) {
