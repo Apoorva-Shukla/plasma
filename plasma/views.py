@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from profile_page.views import basic_vars_return
@@ -69,3 +69,11 @@ def register(request):
 
 
     return render(request, 'r.html')
+
+
+def sign_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return render(request, 'sign_out.html')
+    else:
+        return redirect('/s/')

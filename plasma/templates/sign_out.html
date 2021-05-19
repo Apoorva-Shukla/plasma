@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plasma • You are sign out</title>
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <style>
+        * {
+            color: rgb(107, 107, 107);
+        }
+    </style>
+
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'profile_page/images/logos/color/f_logo_RGB-Blue_58.png' %}" type="image/x-icon">
+</head>
+<body>
+
+    <div class="container my-4">
+        <h4 class="mb-2">Signed out</h4>
+        <p class="mb-2">Thanks for spending some quality time with the Web site today.</p>
+        <a class="mb-2" href="/s/" style="text-decoration: none;">Sign in again</a>
+    </div>
+
+</body>
+</html>
