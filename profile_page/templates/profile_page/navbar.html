@@ -26,9 +26,9 @@
                 </div>
                 <div class="my-auto mx-2 nav-user-photo">
                     {% if profile.avatar != '' %}
-                    <img src="/media/{{profile.avatar}}" alt=" " style="width: 40px;height:40px;border-radius: 100%;cursor: pointer;" class="my-auto">
+                    <img src="/media/{{profile.avatar}}" alt=" " style="width: 40px;height:40px;border-radius: 100%;cursor: pointer;" class="my-auto profile-page-link">
                     {% else %}
-                    <img src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" " style="width: 40px;height:40px;border-radius: 100%;cursor: pointer;" class="my-auto">
+                    <img src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" " style="width: 40px;height:40px;border-radius: 100%;cursor: pointer;" class="my-auto profile-page-link">
                     {% endif %}
                 </div>
             </div>
