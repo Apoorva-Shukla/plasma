@@ -3,19 +3,12 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from profile_page.views import basic_vars_return
 
 def home(request):
-    authenticated, profile, page, friends_list = basic_vars_return(request)
+    if request.user.is_authenticated:
+        return redirect(f'/{request.user.username}/')
 
-    context = {
-        'authenticated': authenticated,
-        'profile': profile,
-        'page': page,
-        'friends_list': friends_list,
-    }
-
-    return render(request, 'home.html', context)
+    return redirect('/s/')
 
 def sign_in(request):
     if request.user.is_authenticated:
