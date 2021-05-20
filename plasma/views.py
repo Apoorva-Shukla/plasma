@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from profile_page.models import Profile
 from django.contrib import messages
 
 def home(request):
@@ -21,10 +22,14 @@ def sign_in(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            if request.POST.get('next', ''):
+                return redirect(f"{request.POST.get('next', '')}")
             return redirect('/')
         else:
             # No backend authenticated the credentials
             messages.error(request, 'Bad credentials', 'alert-danger')
+            if request.POST.get('next', ''):
+                return redirect(f"/s/?next={request.POST.get('next', '')}")
             return redirect('/s/')
 
     return render(request, 's.html')
@@ -45,9 +50,15 @@ def register(request):
                 splitted.pop(0)
                 last_name = ' '.join(splitted)
 
-                User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password).save()
+                user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password)
+                user.save()
+                Profile.objects.create(user=user).save()
+                auth_u = authenticate(request, username=username, password=password)
+                login(request, auth_u)
 
-                return JsonResponse(data={'redirect_url': '/s/'})
+                if request.POST.get('next', ''):
+                    return JsonResponse(data={'redirect_url': f"{request.POST.get('next', '')}"})
+                return JsonResponse(data={'redirect_url': '/'})
             except:
                 pass
 

@@ -34,6 +34,7 @@
             <h4 class="text-center mb-4">Register to make friends on Plasma</h4>
             <form action="/r/" method="POST" id="id_form">
                 {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
                 <div class="mb-3">
                     <label for="id_name" class="form-label">Full name</label>
                     <input type="text" id="id_name" class="form-control" placeholder="Name" name="name" required />
