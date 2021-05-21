@@ -73,18 +73,30 @@ def check_private(request, postss, page, username, index):
 # Create your views here.
 def main(request, username):
     form = PostForm(request.POST or None, request.FILES or None, user=request.user)
+    if request.method == 'POST':
+        if request.POST.get('name_', '') == 'add-comment':
+            commenter = Profile.objects.filter(user=request.user)
+            comment = request.POST.get('comment', '')
+            post = Post.objects.filter(pk=int(request.POST.get('post_pk', ''))).first()
 
-    if request.is_ajax():
-        if form.is_valid():
-            if request.user == User.objects.filter(username=form.cleaned_data.get('profile')).first():
-                form.save()
+            Comment.objects.create(commenter=commenter.first(), post=post, comment=comment).save()
 
-                latest_post = list(Post.objects.filter(profile=form.cleaned_data['profile']))[-1].pk
-                latest_post = Post.objects.filter(pk=latest_post)
-                latest_post = serialize('json', latest_post)
-                return JsonResponse(data={
-                    'lp': latest_post,
-                })
+            return JsonResponse(data={
+                'commenter': serialize('json', commenter),
+                'user': serialize('json', User.objects.filter(username=request.user.username)),
+            })
+
+        elif request.is_ajax():
+            if form.is_valid():
+                if request.user == User.objects.filter(username=form.cleaned_data.get('profile')).first():
+                    form.save()
+
+                    latest_post = list(Post.objects.filter(profile=form.cleaned_data['profile']))[-1].pk
+                    latest_post = Post.objects.filter(pk=latest_post)
+                    latest_post = serialize('json', latest_post)
+                    return JsonResponse(data={
+                        'lp': latest_post,
+                    })
 
     authenticated, profile, page, friends_list = basic_vars_return(request, username)
 

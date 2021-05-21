@@ -97,7 +97,7 @@ function loadMorePosts() {
                         </div>
                         <div class="e-comments border-top">
                                 <div class="add-comment-container py-3">
-                                    <input type="text" class="form-control w-100 transparent-inp" placeholder="Say something..." style="border-bottom: 1px solid rgba(128, 128, 128, 0.2)!important;">
+                                    <input type="text" name="add-comment-input" id="add-comment-${posts[i].pk}" class="form-control w-100 transparent-inp" placeholder="Say something..." style="border-bottom: 1px solid rgba(128, 128, 128, 0.2)!important;">
                                 </div>
                                 <div class="e-comments-fluid py-3">
                                     <div class="e-comments-items"></div>
@@ -263,7 +263,7 @@ if (form != null) {
                             </div>
                         <div class="e-comments border-top">
                             <div class="add-comment-container py-3">
-                                <input type="text" class="form-control w-100 transparent-inp" placeholder="Say something..." style="border-bottom: 1px solid rgba(128, 128, 128, 0.2)!important;">
+                                <input type="text" name="add-comment-input" id="add-comment-${_data.pk}" class="form-control w-100 transparent-inp" placeholder="Say something..." style="border-bottom: 1px solid rgba(128, 128, 128, 0.2)!important;">
                             </div>
                             <div class="e-comments-fluid py-3">
                                 <div class="e-comments-items"></div>
@@ -494,4 +494,70 @@ $(document).on('click', '.comment-load-btn', (e) => {
         },
         dataType: 'json',
     });
+});
+
+// add comment logic
+// name="add-comment-input" id="add-comment-{{i.0.pk}}"
+$(document).on('keyup', 'input[name=add-comment-input]', (e) => {
+    if (e.keyCode === 13) {
+        // Cancel the default action, if needed
+        e.preventDefault();
+
+        let count = 0;
+        for (let i in e.target.value) {
+            if (e.target.value[i] == " ") {
+                count += 1;
+            }
+        }
+        if (e.target.value == '' || count == e.target.value.length) {
+            return;
+        }
+
+        // send data to server
+        callAJAX('POST', `/${$('#auth_username').val()}/`,
+            {
+                post_pk: e.target.id.split('-').pop(-1).toString(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken').val(),
+                comment: e.target.value,
+                name_: 'add-comment',
+            },
+            success = (data) => {
+                let commenter = $.parseJSON(data.commenter)[0];
+                let user = $.parseJSON(data.user)[0];
+                let comment = e.target.value;
+                e.target.value = '';
+
+                let img_html = `<img class="rounded-circle" width="50px" height="50px" src="/static/profile_page/images/default_avatar.jpg">`;
+                if (commenter.fields.avatar != '') {
+                    img_html = `<img class="rounded-circle" width="50px" height="50px" src="/media/${commenter.fields.avatar}">`;
+                }
+
+                let html = `<div class="each-comment d-flex mb-4">
+                    <div class="each-comment-img my-auto">
+                        ${img_html}
+                    </div>
+                    <div class="each-comment-text my-auto mx-3" style="flex: 1;">
+                        <div>
+                            <a href="/${user.fields.username}/" class="fw-bold text-primary">${user.fields.username}</a>
+                            <span class="mx-1 badge rounded-pill bg-dark">Just now</span>
+                        </div>
+                        <span class="each-comment-actual-text d-block">
+                            ${comment}
+                        </span>
+                    </div>
+                    </div>`;
+
+                e.target.disabled = false;
+                $(jQuery(e.target)).parent().parent().find('.e-comments-items').prepend(html);
+                $(jQuery(e.target)).focus();
+                showAlert('Your comment has been added');
+            },
+            error = () => {
+                showAlert();
+            },
+            beforeSend = () => {
+                e.target.disabled = true;
+            }
+        );
+    }
 });
