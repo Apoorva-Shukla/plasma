@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.models import User
-from .models import Profile, Post, Friend, Like, Comment, Story
+from .models import Profile, Post, Friend, Like, Comment
 from django.core.serializers import serialize
 from .forms import PostForm
 from django.contrib.messages import constants as messages
@@ -423,20 +423,3 @@ def update_banner(request):
 
     else:
         raise Http404()
-
-def story(request, username):
-    authenticated, profile, page, friends_list = basic_vars_return(request, username)
-
-    auth_stories = Story.objects.filter(profile=page)
-    friends_story_list = [Story.objects.filter(profile=i).first() for i in friends_list]
-    print(friends_story_list)
-
-    context = {
-        'authenticated': authenticated,
-        'profile': profile,
-        'page': page,
-        'friends_list': friends_list,
-        'friends_story_list': friends_story_list,
-        'auth_stories': auth_stories,
-    }
-    return render(request, 'profile_page/story.html', context)

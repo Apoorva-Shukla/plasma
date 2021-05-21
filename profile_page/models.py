@@ -142,13 +142,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
-
-class Story(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-
-    image = models.ImageField(upload_to=story_image_upload, blank=True)
-    video = models.ImageField(upload_to=story_video_upload, blank=True)
-    caption = models.TextField(max_length=500, blank=True)
-
-    date = models.DateField(auto_now_add=True)
-    time = models.TimeField(auto_now_add=True)

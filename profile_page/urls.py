@@ -9,5 +9,4 @@ urlpatterns = [
     path('update-avatar/', views.update_avatar, name="update_avatar"),
     path('update-banner/', views.update_banner, name="update_avatar"),
     path('<username>/', views.main, name="profile_page"),
-    path('<username>/story/', views.story, name="user_story"),
 ]
