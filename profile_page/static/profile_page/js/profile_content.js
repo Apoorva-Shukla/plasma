@@ -1,4 +1,3 @@
-const months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'August', 'Sep', 'Oct', 'Nov', 'Dec'];
 const container = $('.main-content');
 const pagePosts = $('.page-posts');
 const laterHtml = `<p class="text-center" id="more-post-container">

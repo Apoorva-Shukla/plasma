@@ -90,12 +90,12 @@ button:focus {
 
 /* elements------------ */
 
-.account-info-dropdown {
+.account-info-dropdown, .notifications-dropdown {
     position: absolute;
     right: 0;
 }
 
-.account-info-fluid {
+.account-info-fluid, .notifications-fluid {
     background-color: #fff;
     box-shadow: 0 0 5px #222;
     border-radius: 5px;
@@ -124,4 +124,19 @@ button:focus {
 
 .nav-user-photo:hover {
     transform: scale(1.2);
+}
+
+/* notifications */
+.notifications-fluid {
+    overflow: auto;
+}
+
+.e-notification {
+    cursor: pointer;
+    font-size: large;
+    font-weight: 600;
+}
+
+.e-notification:hover {
+    background-color: var(--hovercolor)!important;
 }

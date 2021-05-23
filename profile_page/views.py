@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.models import User
-from .models import Profile, Post, Friend, Like, Comment
+from .models import Profile, Post, Friend, Like, Comment, Notification
 from django.core.serializers import serialize
 from .forms import PostForm
 from django.contrib.messages import constants as messages
@@ -9,6 +9,10 @@ import math
 from time import strftime
 
 # Utils
+def add_notification(profile, notification_text, link):
+    noti = Notification.objects.create(profile=profile, notification_text=notification_text, link=link)
+    noti.save()
+
 def basic_vars_return(request, username=None):
     '''
     username - page username
@@ -243,6 +247,7 @@ def friend(request):
                         already_friends.sender = sender
                         already_friends.receiver = page
                         already_friends.save()
+                        add_notification(page, f'{sender.user.username} sent you a friend request', f'/{sender.user.username}/')
                 else:
                     if (already_friends2.rejected == True):
                         already_friends2.accepted = False
@@ -250,15 +255,18 @@ def friend(request):
                         already_friends2.sender = sender
                         already_friends2.receiver = page
                         already_friends2.save()
+                        add_notification(page, f'{sender.user.username} sent you a friend request', f'/{sender.user.username}/')
                     elif (other_one_request.accepted == False and other_one_request.rejected == False):
                         other_one_request.sender = sender
                         other_one_request.receiver = page
                         other_one_request.accepted = True
                         other_one_request.save()
+                        add_notification(page, f'{sender.user.username} sent you a friend request', f'/{sender.user.username}/')
 
             elif i_sent_request != None:pass
             elif already_friends == None and already_friends2 == None and other_one_request == None and i_sent_request == None:
                 obj = Friend(sender=sender, receiver=page).save()
+                add_notification(page, f'{sender.user.username} sent you a friend request', f'/{sender.user.username}/')
 
 
         elif request.POST.get('name', '') == 'cancel-request':
@@ -280,6 +288,7 @@ def friend(request):
                 obj.rejected = False
                 obj.save()
 
+                add_notification(page, f'{sender.user.username} accepted your friend request', f'/{sender.user.username}/')
 
         elif request.POST.get('name', '') == 'reject-friend':
             obj = Friend.objects.filter(receiver=sender, sender=page).first()
@@ -287,6 +296,8 @@ def friend(request):
                 obj.accepted = False
                 obj.rejected = True
                 obj.save()
+
+                add_notification(page, f'{sender.user.username} rejected your friend request', f'/{sender.user.username}/')
 
 
         elif request.POST.get('name', '') == 'unfriend':
@@ -300,6 +311,8 @@ def friend(request):
             obj.accepted = True
             obj.rejected = True
             obj.save()
+
+            add_notification(page, f'{sender.user.username} removed you as a friend', f'/{sender.user.username}/')
 
         return JsonResponse(data={
             '': '',
@@ -322,6 +335,7 @@ def like_post(request):
             if request.POST.get('name', '') == 'like':
                 if Like.objects.filter(lb=profile, post=post_list[index]).first() == None:
                     Like(lb=profile, post=post_list[index]).save()
+                    add_notification(page, f'{profile.user.username} liked your post', '')
             elif request.POST.get('name', '') == 'unlike':
                 Like.objects.filter(lb=profile, post=post_list[index]).delete()
 
@@ -419,6 +433,16 @@ def update_banner(request):
         profile.save()
         return JsonResponse(data={
             'url': profile.banner.url,
+        })
+
+    else:
+        raise Http404()
+
+def notification_load(request):
+    if request.method == "POST":
+        notifications = Notification.objects.filter(profile=Profile.objects.filter(user=request.user).first())
+        return JsonResponse(data={
+            'notifications': serialize('json', notifications),
         })
 
     else:
