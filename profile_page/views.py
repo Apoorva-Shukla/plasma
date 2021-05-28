@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.models import User
-from .models import Profile, Post, Friend, Like, Comment, Notification
+from .models import Profile, Post, Friend, Like, Comment, Notification, Circle
 from django.core.serializers import serialize
 from .forms import PostForm
 from django.contrib.messages import constants as messages
 import math
 from time import strftime
+from django.contrib.auth.decorators import login_required
 
 # Utils
 def add_notification(profile, notification_text, link):
@@ -447,3 +448,34 @@ def notification_load(request):
 
     else:
         raise Http404()
+
+@login_required(login_url='/s/')
+def create_circle(request):
+    authenticated, profile, page, friends_list = basic_vars_return(request, request.user.username)
+    if request.method == 'POST':
+        if request.POST.get('_name', '') == 'remove-person':
+            person = Profile.objects.filter(pk=request.POST.get('person', '')).first()
+            circle = Circle.objects.filter(pk=request.POST.get('circle', '')).first()
+
+            circle.people.remove(person)
+            circle.save()
+            return JsonResponse(data={})
+
+        elif request.POST.get('_name', '') == 'add-user':
+            username = request.POST.get('username', '')
+            cirlce_pk = request.POST.get('circle_pk', '')
+
+            user = User.objects.filter(username=username).first()
+            if user == None:
+                return JsonResponse(data={'message': 'User does not exists'})
+
+            profile = Profile.objects.filter(user=user).first()
+            circle = Circle.objects.filter(pk=cirlce_pk).first()
+
+            circle.people.add(Profile)
+
+    circles = Circle.objects.filter(profile=profile)
+    context = {
+        'circles': circles,
+    }
+    return render(request, 'profile_page/circle.html', context)

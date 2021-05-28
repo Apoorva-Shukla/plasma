@@ -9,5 +9,6 @@ urlpatterns = [
     path('update-avatar/', views.update_avatar, name="update_avatar"),
     path('update-banner/', views.update_banner, name="update_avatar"),
     path('notifications/', views.notification_load, name="notifications"),
+    path('create/circle/', views.create_circle, name="create_circle"),
     path('<username>/', views.main, name="profile_page"),
 ]

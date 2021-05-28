@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circles • Plasma</title>
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
+
+    <!-- fontawesome css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+
+    <!-- google fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'profile_page/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'profile_page/css/circle.css' %}" />
+    <link rel="stylesheet" href="{% static 'profile_page/css/alert.css' %}" />
+
+    <link rel="shortcut icon" href="{% static 'profile_page/images/logos/color/f_logo_RGB-Blue_58.png' %}" type="image/x-icon" />
+</head>
+
+<body>
+    <!-- alert -->
+    <div class="l-alert-c d-none"></div>
+
+    <!-- add user to circle modal -->
+    <div class="modal fade" id="add-circle-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="circle-name-inp">Name of the circle</label>
+                        <input id="circle-name-inp" name="name" type="text" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="search-user-inp">Type a username</label>
+                        <input type="text" id="search-user-inp" name="user-search" class="form-control" placeholder="Search a user">
+                    </div>
+                    <div class="search-user-result-container"></div>
+                    <div class="mb-3">
+                        <button class="btn button-green w-100">Add user</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5" id="container_id">
+        <div class="container-fluid" id="container_fluid_id">
+            {% csrf_token %} {% for i in circles %}
+            <div class="circle bg-white px-3 py-3 text-center border d-inline-block" id="{{i.pk}}-circle" name="{{i.name}}">
+                <h3 class="mb-3 text-blue" style="text-decoration: underline;">{{i.name}}</h3>
+                <div class="circle-fluid d-flex" style="justify-content: space-evenly;">
+                    {% for j in i.people.all %}
+                    <button class="e-btn d-block mx-2 px-3 py-2" id="{{j.pk}}-people" name={{j.user.username}}>
+                        {% if j.avatar != '' %}
+                        <img class="d-block mx-auto" style="border: 3px solid var(--theme2)" src="/media/{{j.avatar}}" alt=" ">
+                        {% else %}
+                        <img class="d-block mx-auto" style="border: 3px solid var(--theme2)" src="{% static 'profile_page/images/default_avatar.jpg' %}" alt=" ">
+                        {% endif %}
+                        <span class="d-block" style="color: var(--theme1);font-weight: 600;text-decoration: none;">{{j.user.username}}</span>
+                    </button> {% endfor %}
+                    <button class="btn fas fa-plus" data-bs-toggle="modal" data-bs-target="#add-circle-modal"></button>
+                </div>
+            </div>
+            {% endfor %}
+
+
+
+            <!-- <div class="add-circle bg-white px-3 py-3 text-center border d-inline-block">
+                <button class="fas fa-plus btn"> <span style="font-family: 'Roboto';">Create a circle</span></button>
+            </div> -->
+
+        </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+<script src="{% static 'profile_page/js/circle.js' %}"></script>
+<script src="{% static 'profile_page/js/global.js' %}"></script>
+<script src="{% static 'profile_page/js/alert.js' %}"></script>
+</html
